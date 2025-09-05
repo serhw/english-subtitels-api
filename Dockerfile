@@ -9,24 +9,19 @@ WORKDIR /src
 
 # Copy project file and restore dependencies
 COPY ["Subtitles.Api/Subtitles.Api.csproj", "Subtitles.Api/"]
-RUN dotnet restore "Subtitles.Api/Subtitles.Api.csproj" \
-    --runtime alpine-x64 \
-    --no-cache
+RUN dotnet restore "Subtitles.Api/Subtitles.Api.csproj"
 
 # Copy source code
 COPY . .
 WORKDIR "/src/Subtitles.Api"
 
-# Publish with aggressive optimizations
+# Publish with optimizations
 RUN dotnet publish "Subtitles.Api.csproj" \
     -c Release \
     -o /app/publish \
-    --runtime alpine-x64 \
     --self-contained false \
     --no-restore \
-    /p:UseAppHost=false \
-    /p:PublishTrimmed=false \
-    /p:PublishSingleFile=false
+    /p:UseAppHost=false
 
 # Final stage - use minimal Alpine runtime
 FROM base AS final
