@@ -8,7 +8,7 @@ set -e
 # Default values
 IMAGE_TAG="${1:-latest}"
 ENVIRONMENT="${2:-production}"
-GITHUB_USERNAME="${GITHUB_USERNAME:-your-github-username}"
+GITHUB_USERNAME="${GITHUB_USERNAME:-serhw}"
 IMAGE_NAME="ghcr.io/${GITHUB_USERNAME}/english-subtitels-api:${IMAGE_TAG}"
 
 echo "🚀 Deploying Subtitles API"
