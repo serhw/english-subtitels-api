@@ -17,4 +17,8 @@
     <PackageReference Include="Serilog.Enrichers.Process" Version="3.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Subtitles.Data\Subtitles.Data.csproj" />
+  </ItemGroup>
+
 </Project>

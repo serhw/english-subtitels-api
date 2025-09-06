@@ -1,4 +1,6 @@
 using Serilog;
+using Microsoft.EntityFrameworkCore;
+using Subtitles.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,8 +34,33 @@ try
 
     // Add services to the container.
     builder.Services.AddControllers();
+    
+    // Add Entity Framework and PostgreSQL
+    builder.Services.AddDbContext<SubtitlesDbContext>(options =>
+        options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"),
+            npgsqlOptions =>
+            {
+                npgsqlOptions.MigrationsAssembly("Subtitles.Data");
+                npgsqlOptions.CommandTimeout(30);
+            }));
 
     var app = builder.Build();
+    
+    // Ensure database is created and migrated
+    using (var scope = app.Services.CreateScope())
+    {
+        var context = scope.ServiceProvider.GetRequiredService<SubtitlesDbContext>();
+        try
+        {
+            context.Database.Migrate();
+            Log.Information("Database migration completed successfully");
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, "An error occurred while migrating the database");
+            throw;
+        }
+    }
 
     // Configure the HTTP request pipeline.
     app.UseSerilogRequestLogging(); // Add request logging
