@@ -142,3 +142,4 @@ namespace Subtitles.Data.Migrations
         }
     }
 }
+

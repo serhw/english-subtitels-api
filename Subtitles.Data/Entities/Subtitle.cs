@@ -32,3 +32,4 @@ public class Subtitle
     // Navigation properties
     public ICollection<SubtitleEntry> Entries { get; set; } = new List<SubtitleEntry>();
 }
+

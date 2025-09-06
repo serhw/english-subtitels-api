@@ -25,3 +25,4 @@ public class SubtitleEntry
     // Navigation properties
     public Subtitle Subtitle { get; set; } = null!;
 }
+

@@ -52,3 +52,4 @@ public class SubtitlesDbContext : DbContext
         });
     }
 }
+
